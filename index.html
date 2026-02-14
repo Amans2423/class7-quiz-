@@ -1,252 +1,182 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Class 7 - Internet, Cyber Security, Scratch & Generations Quiz</title>
-  <style>
-    :root{
-      --bg1: #0f172a;
-      --accent1: #06b6d4;
-      --accent2: #7c3aed;
-      --soft:#e6f6f7;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:"Segoe UI",Tahoma,sans-serif;
-      background:linear-gradient(135deg,#071126 0%,#08263b 40%,#05243a 100%);
-      color:var(--soft);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      min-height:100vh;
-      padding:24px;
-    }
-    header{text-align:center;margin-bottom:12px;max-width:900px}
-    h1{
-      margin:0;
-      font-size:1.6rem;
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      -webkit-background-clip:text;
-      color:transparent;
-    }
-    p.lead{margin:6px 0;color:#9fbfc8}
-    .container{
-      width:100%;
-      max-width:900px;
-      background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border-radius:12px;
-      padding:18px;
-      box-shadow:0 8px 30px rgba(2,6,23,0.6);
-    }
-    .inputbox{display:flex;flex-direction:column;align-items:center;gap:8px}
-    input[type="text"]{
-      width:80%;max-width:360px;padding:10px;border-radius:10px;
-      border:2px solid rgba(255,255,255,0.1);
-      background:rgba(255,255,255,0.03);
-      color:var(--soft);font-size:1rem;
-    }
-    button{
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      border:none;color:#02121a;padding:10px 16px;border-radius:10px;
-      cursor:pointer;font-weight:600;
-    }
-    button:hover{transform:translateY(-2px)}
-    .qcard{
-      background:rgba(255,255,255,0.02);
-      border:1px solid rgba(255,255,255,0.05);
-      padding:12px;border-radius:10px;margin-bottom:12px;
-    }
-    .qtext{font-weight:600;margin-bottom:8px;color:#d6eef2}
-    .opts label{display:block;margin-bottom:6px;cursor:pointer;color:#cfeff4}
-    .fact{
-      background:linear-gradient(90deg,rgba(124,58,237,0.12),rgba(6,182,212,0.06));
-      border-left:4px solid rgba(124,58,237,0.6);
-      padding:10px;margin:12px 0;border-radius:8px;font-size:0.95rem;
-    }
-    .sectionTitle h2{margin:0;font-size:1.05rem;color:var(--accent1)}
-    .resultBox{
-      text-align:center;padding:18px;border-radius:10px;
-      background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);
-    }
-    .good{background:linear-gradient(90deg,#0f5132,#1b7f55);color:#dfffe6;padding:10px;border-radius:8px;display:inline-block;margin-top:8px}
-    .footnote{font-size:0.88rem;color:#98c2c8;margin-top:6px;text-align:center}
-  </style>
+<meta charset="UTF-8">
+<title>Class 7 Computer Quiz</title>
+
+<style>
+body{
+font-family: Arial;
+background: linear-gradient(to right,#4facfe,#00f2fe);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+.container{
+background:white;
+width:95%;
+max-width:520px;
+padding:20px;
+border-radius:12px;
+box-shadow:0 0 12px black;
+text-align:center;
+}
+.option{
+background:#eee;
+padding:8px;
+margin:5px 0;
+border-radius:5px;
+cursor:pointer;
+}
+.correct{background:#a6f5a6;}
+.wrong{background:#ff9a9a;}
+#timer{color:red;font-size:18px;}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>Class 7 — Quiz: Internet • Cyber Security • Scratch • Generations</h1>
-    <p class="lead">30 Questions • Case-based • Knowledge-packed</p>
-  </header>
+<div class="container">
 
-  <div class="container">
-    <div id="startScreen">
-      <label class="inputbox">
-        <strong>Enter your name to begin:</strong>
-        <input type="text" id="studentName" placeholder="Your name here">
-      </label>
-      <div style="text-align:center;margin-top:12px;">
-        <button onclick="startQuiz()">Start Quiz</button>
-      </div>
-      <p class="footnote">Tip: This quiz works directly in your browser — no sign-in required. Just open and start!</p>
-    </div>
+<div id="start">
+<h2>Class 7 Computer Quiz</h2>
+<input id="name" placeholder="Name"><br><br>
+<input id="cls" placeholder="Class"><br><br>
+<input id="section" placeholder="Section"><br><br>
+<button onclick="startQuiz()">Start Quiz</button>
+</div>
 
-    <div id="quizScreen" style="display:none;">
-      <div id="questions"></div>
-      <div style="text-align:center;margin-top:12px;">
-        <button onclick="submitQuiz()">Submit Answers</button>
-      </div>
-    </div>
+<div id="quiz" style="display:none;">
+<div id="timer">Time: 30</div>
+<h3 id="question"></h3>
+<div id="options"></div>
+</div>
 
-    <div id="resultScreen" style="display:none;"></div>
-  </div>
+<div id="result" style="display:none;">
+<h2>Result</h2>
+<p id="info"></p>
+<p id="marks"></p>
+</div>
+
+</div>
 
 <script>
-const quizData=[
-  {q:"1. What does URL stand for?",options:["Universal Resource Locator","Uniform Resource Locator","Universal Reference Link","Uniform Reference Link"],answer:"Uniform Resource Locator"},
-  {q:"2. Which one is a web browser?",options:["Google Chrome","Microsoft Word","Windows","Excel"],answer:"Google Chrome"},
-  {q:"3. HTTPS in a website address means:",options:["Site is unsecured","Data is encrypted","Site is offline","Page is plain text"],answer:"Data is encrypted"},
-  {q:"4. Search engines are used to:",options:["Edit images","Find information on the web","Make presentations","Send emails"],answer:"Find information on the web"},
-  {q:"5. Which device connects a home network to the internet?",options:["Router","Monitor","Printer","Keyboard"],answer:"Router"},
-  {q:"6. A web page address starts with:",options:["http:// or https://","file://","doc://","mail://"],answer:"http:// or https://"},
-  {q:"7. True or False: A strong password should include letters, numbers and symbols.",options:["True","False"],answer:"True"},
-  {q:"8. Which is a safe practice while using the internet?",options:["Click every link","Share passwords","Log out on public computers","Use same password everywhere"],answer:"Log out on public computers"},
 
-  {q:"9. CASE: You receive an unknown email with 'invoice.exe'. What should you do?",options:["Open it","Reply","Delete or report as spam","Forward to friends"],answer:"Delete or report as spam"},
-  {q:"10. CASE: Friend sends a strange link 'Win a gift!'. You should:",options:["Click it","Ask friend if they sent it","Share on profile","Ignore"],answer:"Ask friend if they sent it"},
-  {q:"11. CASE: Antivirus update popup from random site appears. You should:",options:["Install from popup","Ignore and update only from official app","Enter password","Restart PC"],answer:"Ignore and update only from official app"},
-  {q:"12. CASE: Using public Wi-Fi. Best practice:",options:["Use it freely","Use VPN or avoid sensitive logins","Share password","Turn off antivirus"],answer:"Use VPN or avoid sensitive logins"},
-  {q:"13. CASE: Someone asks for friend’s password to help. You should:",options:["Share it","Tell them to ask friend","Change friend’s password","Post online"],answer:"Tell them to ask friend"},
-  {q:"14. CASE: You find a USB stick in school. You should:",options:["Plug in","Give to teacher/IT staff","Take home","Ignore"],answer:"Give to teacher/IT staff"},
-  {q:"15. CASE: Site asks for unnecessary personal info. You should:",options:["Provide info","Close site and verify official source","Use fake info","Pay money"],answer:"Close site and verify official source"},
-  {q:"16. CASE: Your password leaked. First step:",options:["Ignore","Change it & enable 2FA","Tell friends","Delete account"],answer:"Change it & enable 2FA"},
-
-  {q:"17. Scratch is used to:",options:["Create spreadsheets","Make block-based programs","Edit photos","Write essays"],answer:"Make block-based programs"},
-  {q:"18. In Scratch, which block moves sprites?",options:["Looks","Motion","Sound","Variables"],answer:"Motion"},
-  {q:"19. Which block repeats actions?",options:["If","Forever","Say","Wait"],answer:"Forever"},
-  {q:"20. To make sprite say 'Hello' for 2s:",options:["say 'Hello' for 2s","repeat 2","go to x:0 y:0","play sound"],answer:"say 'Hello' for 2s"},
-  {q:"21. True or False: Scratch uses only text code.",options:["True","False"],answer:"False"},
-  {q:"22. Adding sound makes projects:",options:["Boring","More interactive","Slower","Invisible"],answer:"More interactive"},
-
-  {q:"23. First generation computers used:",options:["Transistors","Vacuum tubes","ICs","Microprocessors"],answer:"Vacuum tubes"},
-  {q:"24. Transistor invention led to:",options:["Second generation","First","Third","Fourth"],answer:"Second generation"},
-  {q:"25. ICs belong to which generation?",options:["Third","First","Second","Fourth"],answer:"Third"},
-  {q:"26. True or False: 4th gen used microprocessors.",options:["True","False"],answer:"True"},
-  {q:"27. AI and parallel processing started in:",options:["Fifth","First","Third","Second"],answer:"Fifth"},
-  {q:"28. Each generation had:",options:["Same hardware","Major hardware changes","Only software updates","No difference"],answer:"Major hardware changes"},
-  {q:"29. Which protocol loads web pages?",options:["FTP","HTTP/HTTPS","SMTP","POP3"],answer:"HTTP/HTTPS"},
-  {q:"30. True or False: Backups protect from data loss.",options:["True","False"],answer:"True"}
+let questions=[
+{q:"IPO stands for?",o:["Input Process Output","Input Print Output","Internal Program Output","None"],a:0},
+{q:"Computer is?",o:["Electronic machine","Vehicle","Animal","Plant"],a:0},
+{q:"Hardware example?",o:["Keyboard","Windows","Chrome","Paint"],a:0},
+{q:"Software example?",o:["Mouse","Printer","Windows","Speaker"],a:2},
+{q:"Mouse inventor?",o:["Douglas Engelbart","Bill Gates","Steve Jobs","Charles Babbage"],a:0},
+{q:"HTML full form?",o:["Hyper Text Markup Language","High Transfer Machine Language","None","Other"],a:0},
+{q:"Tux Paint is used for?",o:["Drawing","Typing","Coding","Browsing"],a:0},
+{q:"Booting means?",o:["Starting computer","Deleting file","Printing","Scanning"],a:0},
+{q:"Operating System example?",o:["Windows","Mouse","Cable","Keyboard"],a:0},
+{q:"Internet is?",o:["Network of networks","Single computer","Software","Printer"],a:0},
+{q:"WWW means?",o:["World Wide Web","Wide World Web","Web Wide World","None"],a:0},
+{q:"Phishing is?",o:["Cyber attack","Game","Hardware","Typing"],a:0},
+{q:"Malware means?",o:["Malicious software","Mouse","Memory","Monitor"],a:0},
+{q:"DDoS stands for?",o:["Distributed Denial of Service","Delete Data","Digital Device","None"],a:0},
+{q:"Cyber Ethics means?",o:["Good internet behavior","Virus","Coding","Booting"],a:0},
+{q:"LAN stands for?",o:["Local Area Network","Large Area Network","Long Area Network","None"],a:0},
+{q:"WAN stands for?",o:["Wide Area Network","World Area Network","Wireless Area Network","None"],a:0},
+{q:"MAN stands for?",o:["Metropolitan Area Network","Main Area Network","Mobile Area Network","None"],a:0},
+{q:"PAN stands for?",o:["Personal Area Network","Private Area Network","Public Area Network","None"],a:0},
+{q:"LAN cable is called?",o:["Ethernet cable","USB cable","Power cable","HDMI"],a:0},
+{q:"Bluetooth is used for?",o:["Wireless connection","Printing","Virus","Booting"],a:0},
+{q:"Network connects?",o:["Many computers","Only keyboard","Only mouse","Only printer"],a:0},
+{q:"Input device?",o:["Keyboard","Monitor","Speaker","Printer"],a:0},
+{q:"Output device?",o:["Monitor","Mouse","Scanner","Keyboard"],a:0},
+{q:"IPO first step?",o:["Input","Output","Process","Delete"],a:0},
+{q:"Example of system software?",o:["Windows","Paint","Game","Tux Paint"],a:0},
+{q:"Example of application software?",o:["MS Word","Mouse","CPU","Cable"],a:0},
+{q:"Computer virus is?",o:["Harmful program","Animal","Song","Game"],a:0},
+{q:"Strong password should have?",o:["Letters numbers symbols","Only name","Only 1234","Birthday"],a:0},
+{q:"Do not share OTP with?",o:["Anyone","Teacher","Parents","Friend"],a:0},
+{q:"Antivirus protects from?",o:["Virus","Dust","Heat","Noise"],a:0},
+{q:"Email is used for?",o:["Sending messages","Drawing","Typing only","Gaming"],a:0},
+{q:"Google Chrome is?",o:["Web browser","Hardware","Virus","Cable"],a:0},
+{q:"CPU is called?",o:["Brain of computer","Screen","Mouse","Printer"],a:0}
 ];
 
+let i=0,score=0,time=30,timer;
+
 function startQuiz(){
-  const name=document.getElementById("studentName").value.trim();
-  if(!name){alert("Please enter your name!");return;}
-  document.getElementById("startScreen").style.display="none";
-  document.getElementById("quizScreen").style.display="block";
-  loadQuestions();
+let name=document.getElementById("name").value;
+let cls=document.getElementById("cls").value;
+let sec=document.getElementById("section").value;
+
+if(name==""||cls==""||sec==""){
+alert("Please fill all details");
+return;
 }
 
-function loadQuestions(){
-  const qDiv=document.getElementById("questions");
-  qDiv.innerHTML="";
-  const sectionTitles=[
-    "Section A — Internet Basics (1–8)",
-    "Section B — Cyber Security (9–16)",
-    "Section C — Scratch (17–22)",
-    "Section D — Generations of Computers (23–30)"
-  ];
-  const facts=[
-    "💡 The Internet is a global network connecting millions of devices.",
-    "🛡️ Phishing tricks users into giving private info. Always verify senders.",
-    "🎮 Scratch teaches coding with blocks — great for creativity and logic.",
-    "🧠 Each computer generation brought huge hardware improvements."
-  ];
-  const ranges=[[0,7],[8,15],[16,21],[22,29]];
-  for(let s=0;s<4;s++){
-    qDiv.innerHTML+=`<div class='sectionTitle'><h2>${sectionTitles[s]}</h2></div>`;
-    qDiv.innerHTML+=`<div class='fact'>${facts[s]}</div>`;
-    for(let i=ranges[s][0];i<=ranges[s][1];i++){
-      qDiv.innerHTML+=makeQuestionHTML(quizData[i],i);
-    }
-  }
+document.getElementById("start").style.display="none";
+document.getElementById("quiz").style.display="block";
+loadQuestion();
 }
 
-function makeQuestionHTML(item,i){
-  let h=`<div class='qcard'><div class='qtext'>${item.q}</div>`;
-  item.options.forEach(o=>{
-    h+=`<label><input type='radio' name='q${i}' value='${o}'> ${o}</label>`;
-  });
-  h+="</div>";
-  return h;
+function loadQuestion(){
+time=30;
+document.getElementById("timer").innerText="Time: "+time;
+
+clearInterval(timer);
+timer=setInterval(()=>{
+time--;
+document.getElementById("timer").innerText="Time: "+time;
+if(time==0) next();
+},1000);
+
+document.getElementById("question").innerText=(i+1)+". "+questions[i].q;
+
+let box=document.getElementById("options");
+box.innerHTML="";
+
+questions[i].o.forEach((opt,idx)=>{
+let d=document.createElement("div");
+d.className="option";
+d.innerText=opt;
+d.onclick=()=>answer(idx,d);
+box.appendChild(d);
+});
 }
 
-function submitQuiz(){
-  const answers={};
-  for(let i=0;i<quizData.length;i++){
-    const radios=document.getElementsByName("q"+i);
-    let selected=null;
-    for(const r of radios){if(r.checked){selected=r.value;break;}}
-    answers["q"+i]=selected;
-  }
+function answer(idx,el){
+clearInterval(timer);
 
-  const sections=[
-    {name:"Internet Basics",start:0,end:7},
-    {name:"Cyber Security",start:8,end:15},
-    {name:"Scratch",start:16,end:21},
-    {name:"Generations of Computers",start:22,end:29}
-  ];
-
-  for(const sec of sections){
-    let count=0;
-    for(let i=sec.start;i<=sec.end;i++){
-      if(answers["q"+i])count++;
-    }
-    if(count<3){
-      alert(`Please answer at least 3 questions in the section: ${sec.name}.`);
-      const el=document.getElementsByName("q"+sec.start)[0];
-      if(el)el.scrollIntoView({behavior:"smooth",block:"center"});
-      return;
-    }
-  }
-
-  let score=0;
-  for(let i=0;i<quizData.length;i++){
-    if(answers["q"+i]===quizData[i].answer)score++;
-  }
-
-  const name=document.getElementById("studentName").value.trim();
-  const res=document.getElementById("resultScreen");
-  document.getElementById("quizScreen").style.display="none";
-  res.style.display="block";
-
-  let html=`<div class='resultBox'><h2>Hi ${name}!</h2>`;
-  html+=`<p style='font-size:1.15rem;'>You scored <strong>${score}</strong> out of ${quizData.length}.</p>`;
-  if(score>=22){html+=`<div class='good'>🌟 Excellent! You’re a Tech Star 🌟</div>`;}
-  else if(score>=16){html+=`<div style='color:#dff7ff;background:rgba(7,97,120,0.08);padding:8px;border-radius:8px;'>👍 Good work! Keep learning.</div>`;}
-  else{html+=`<div style='color:#ffdede;background:rgba(160,30,40,0.06);padding:8px;border-radius:8px;'>💡 Keep practicing — you can try again!</div>`;}
-
-  html+=`<div style='text-align:left;margin-top:12px;padding:10px;border-radius:8px;background:rgba(12,38,60,0.2);'>
-  <strong>Quick Tips:</strong>
-  <ul style='margin:8px 0 0 18px;color:#cfeff4;'>
-  <li>Update antivirus & software regularly.</li>
-  <li>Use strong passwords & 2-factor authentication.</li>
-  <li>Explore Scratch loops & events for interactive coding.</li>
-  <li>Learn how each computer generation evolved hardware.</li>
-  </ul></div>
-  <div style='margin-top:14px;'><button onclick='restartQuiz()'>Try Again</button></div>
-  </div>`;
-  res.innerHTML=html;
-  res.scrollIntoView({behavior:"smooth",block:"center"});
+if(idx==questions[i].a){
+el.classList.add("correct");
+score++;
+}else{
+el.classList.add("wrong");
+document.getElementById("options").children[questions[i].a].classList.add("correct");
 }
 
-function restartQuiz(){
-  document.getElementById("studentName").value="";
-  document.getElementById("resultScreen").style.display="none";
-  document.getElementById("quizScreen").style.display="none";
-  document.getElementById("startScreen").style.display="block";
-  window.scrollTo({top:0,behavior:"smooth"});
+setTimeout(next,1000);
+}
+
+function next(){
+clearInterval(timer);
+i++;
+if(i<questions.length){
+loadQuestion();
+}else{
+showResult();
+}
+}
+
+function showResult(){
+document.getElementById("quiz").style.display="none";
+document.getElementById("result").style.display="block";
+
+document.getElementById("info").innerHTML=
+"Name: "+name.value+"<br>Class: "+cls.value+"<br>Section: "+section.value;
+
+document.getElementById("marks").innerHTML=
+"Marks: "+score+" / "+questions.length;
 }
 </script>
+
 </body>
 </html>
